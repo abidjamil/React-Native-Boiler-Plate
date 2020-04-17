@@ -1,5 +1,3 @@
-react-native bundle --platform android --dev false --entry-file index.js --bundle-output package com.surveyapp;
-
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
