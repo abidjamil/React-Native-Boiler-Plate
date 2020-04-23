@@ -1,5 +1,6 @@
 
-![](https://i.ibb.co/1nCDygJ/My-Post.png)#  Basic React Native boilerplate (Android) for Beginners
+![](https://i.ibb.co/1nCDygJ/My-Post.png)
+#  Basic React Native boilerplate (Android) for Beginners
 This project is a React Native boilerplate that can be used to kickstart a mobile application.
 
 The boilerplate gives an architecture optimized for building solid cross-platform mobile applications through separation of concerns between the UI and business logic.It is amazingly reported so that each piece of code that lands in your application can be understood on and utilized.
@@ -78,6 +79,7 @@ To create a new project using the boilerplate:
 - remove the previous git history: rm -rf .git/
 - install the npm dependencies by npm install, npm install  react-native-cli'
 - rename the project to your own project name
+- create local.properties file in android folder and define sdk path like sdk.dir= C\:\\android\\sdk
  
 ## Running the project
 Assuming you have all the requirements installed, you can setup and run the project by running:
