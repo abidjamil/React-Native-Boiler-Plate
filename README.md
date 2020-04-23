@@ -8,6 +8,12 @@ The boilerplate gives an architecture optimized for building solid cross-platfor
 ```bash
 If you love this boilerplate, give us a star, you will be a ray of sunshine in our lives :)
 ```
+
+ # App Center Configuration
+
+The project is configured with Microsoft App Center for Crash Analytics. It will also helpout to distribute your application with QA Team. Futhermore, CI/CD can be implemented easily. 
+
+ You can App Secret from `android\app\src\main\assets\appcenter-config.json` File.
 ## Libraries Installed 
 
 
@@ -80,6 +86,7 @@ To create a new project using the boilerplate:
 - install the npm dependencies by npm install, npm install  react-native-cli'
 - rename the project to your own project name
 - create local.properties file in android folder and define sdk path like sdk.dir= C\:\\android\\sdk
+- change app secret in android\app\src\main\assets\appcenter-config.json
  
 ## Running the project
 Assuming you have all the requirements installed, you can setup and run the project by running:
