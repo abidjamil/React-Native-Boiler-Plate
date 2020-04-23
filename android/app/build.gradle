@@ -79,8 +79,6 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
-    entryFile: "index.js",
-    extraPackagerArgs: [ '--minify=false' ],
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -129,13 +127,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+packagingOptions {
+        pickFirst '**/armeabi-v7a/libc++_shared.so'
+        pickFirst '**/x86/libc++_shared.so'
+        pickFirst '**/arm64-v8a/libc++_shared.so'
+        pickFirst '**/x86_64/libc++_shared.so'
+        pickFirst '**/x86/libjsc.so'
+        pickFirst '**/armeabi-v7a/libjsc.so'
+    }
     defaultConfig {
         applicationId "com.surveyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+       
     }
     splits {
         abi {
@@ -152,21 +158,25 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
- 
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-           
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-
+        
         staggingrelease {
              initWith release
             matchingFallbacks = ['release']
@@ -176,7 +186,6 @@ android {
               initWith release
             matchingFallbacks = ['release']
         }
-      
     }
 
     packagingOptions {
@@ -243,6 +252,29 @@ project.ext.envConfigFiles = [
     staggingrelease : ".env.stagging",
     anothercustombuild: ".env.qa",
 ]
-
+project.ext.react = [
+    entryFile: "index.js",
+    nodeExecutableAndArgs: hasProperty('NODE_PATH')?[NODE_PATH]:         ["node"],
+    bundleInDebug: false,
+    bundleInStagingrelease: true,
+    bundleInQArelease: true,
+    bundleInRelease: true,
+    jsBundleDirDebug: "$buildDir/intermediates/assets/debug",
+    resourcesDirDebug: "$buildDir/intermediates/res/merged/debug",
+    jsBundleDirStagingrelease: "$buildDir/intermediates/assets/stagingrelease",
+    resourcesDirStagingrelease: 
+        "$buildDir/intermediates/res/merged/staggignrelease",
+      jsBundleDirQarelease: "$buildDir/intermediates/assets/qarelease",
+    resourcesDirQarelease: 
+        "$buildDir/intermediates/res/merged/qarelease",
+    jsBundleDirRelease: "$buildDir/intermediates/assets/release",
+    resourcesDirRelease: 
+        "$buildDir/intermediates/res/merged/release",
+    devDisabledInDebug: false,
+    devDisabledInStagingrelease: true,
+    devDisabledInQarelease: true,
+    devDisabledInRelease: true,
+    inputExcludes: ["ios/**", "__tests__/**", "bundle_out/**"]
+];
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
